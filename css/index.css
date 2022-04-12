@@ -1,0 +1,26 @@
+body{
+    width: 1200px;
+    margin: 0 auto;
+    background-image: linear-gradient(to right, #a8edea 0%, #fed6e3 100%);
+}
+
+code{
+    color: blue;
+    font-weight: bold;
+}
+
+#user-input{
+      text-align: center;
+}
+
+#user-formula{
+    height: 40px;
+    width:  600px;
+    color: purple;
+}
+#x-left, #x-right{
+    width: 120px;
+}
+#formula_error{
+    color: red;
+}
