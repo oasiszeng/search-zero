@@ -1,11 +1,11 @@
-user_input_form = $("#user-input");
 res_anchor = $("#res-anchor");
+search_button = $("#search-button")
 
 let formula, x_left, x_right, max_val, min_val;
-// 拦截表单提交并进行数据处理
-
+// 函数大小约定
+let image_width = 600, image_height = 400;
 // formula异常提示函数：
-function formula_tips() {}
+function formula_tips() { }
 // formula 数学表达式转换为js运算式
 function formula_check() {
   /**
@@ -23,9 +23,10 @@ function formula_check() {
     eval(formula);
   } catch (error) {
     console.log(error);
-    $("#formula_error").append(`发生了错误: ${error.message}`);
+    $("#formula-error").append(`发生了错误: ${error.message}`);
   }
 }
+
 // 零点区间搜索
 function search_zero_interval() {
   formula_check(formula, x_left);
@@ -38,7 +39,9 @@ function search_zero_interval() {
   for (x = x_left + 1; x <= x_right; x++) {
     interval_right = eval(formula);
     if (interval_left * interval_right <= 0) {
-      res_list.push([x - 1, x]);
+      interval = [x - 1, x]
+      swing = [interval_left, interval_right]
+      res_list.push([interval, swing])
     }
     interval_left = interval_right;
     if (max_val < interval_right) {
@@ -53,26 +56,27 @@ function search_zero_interval() {
 
 // 绘制区间函数图像
 let user_formula;
-function plot(root, interval) {
+function plot(root, interval, swing) {
   title = `零点区间[${interval}]`;
   functionPlot({
     title: title,
     target: root,
-    width: $(root).width(),
-    height: $(root).height(),
+    width: image_width,
+    height: image_height,
     xAxis: { domain: interval },
+    yAxis: { domain: swing },
     grid: true,
     data: [{ fn: user_formula }],
   });
 }
 
 // 绘制整体函数图像
-function plot_overall(root, interval) {
+function plot_overall() {
   functionPlot({
     title: "整体函数图像",
-    target: "#image_anchor",
-    width: $("#image_anchor").width(),
-    height: $("#image_anchor").height(),
+    target: "#image-anchor",
+    width: image_width * 1.2,
+    height: image_height * 1.2,
     yAxis: { domain: [min_val, max_val] },
     xAxis: { domain: [x_left, x_right] },
     grid: true,
@@ -80,8 +84,12 @@ function plot_overall(root, interval) {
   });
 }
 
-// 拦截执行函数
-function intercept_submit(e) {
+// 零点搜索函数
+function search_zero() {
+  // 如果当前页面已经绘制过一次函数了，再次绘制另一个函数需要回撤上一次的元素
+  $("#res-anchor").empty()
+  $("#image-anchor").empty()
+  $("#formula-error").empty()
   // 参数获取：
   user_formula = document.getElementById("user-formula").value;
   formula = user_formula;
@@ -91,18 +99,20 @@ function intercept_submit(e) {
   x_right = Number(x_right);
   res_list = search_zero_interval();
   // 最大值、最小值返回到结果锚点
-  content = `<p>最大值：${max_val}  最小值：${min_val}</p>`;
+  content = `<p style="text-align: center;">最大值：${max_val}  最小值：${min_val}</p>`;
   res_anchor.append(content);
   // 绘制整体函数图像
   plot_overall();
   // 绘制结果区间
   res_list.forEach((element, id) => {
     root = `#image_anchor${id}`;
-    image_anchor = `<div id="image_anchor${id}" style="width: 600px; height: 200px;">`;
+    image_anchor = `<div id="image_anchor${id}" style="text-align: center;">`;
     res_anchor.append(image_anchor);
-    plot(root, element);
+    plot(root, element[0], element[1]);
   });
   return false;
 }
 
-user_input_form.on("submit", intercept_submit);
+search_button.click(() => {
+  search_zero();
+})

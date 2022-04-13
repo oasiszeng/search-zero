@@ -1,66 +1,75 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Search-zero</title>
-    <link rel="stylesheet" href="./css/index.css">
-</head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
 
-<body>
-    <form action="#" id="user-input" onclick="()=>{return false}">
-        <p>数学公式:</p>
-        <p id="formula_error"></p>
-        <input type="text" id="user-formula" placeholder="数学公式">
-        <p>'x' 变量范围:</p>
-        <input type="text" id="x-left" placeholder="start">
-        <input type="text" id="x-right" placeholder="end">
-        <input type="submit" value="寻找零点">
+  <body>
+    <h1>search-zero</h1>
+    <form id="user-input">
+      <p>数学表达式:</p>
+      <p id="formula-error"></p>
+      <input type="text" id="user-formula" placeholder="表达式" />
+      <p>'x' 变量范围区间:</p>
+      <input type="text" id="x-left" placeholder="start" />
+      <input type="text" id="x-right" placeholder="end" />
+      <input type="button" id="search-button" value="寻找零点" />
     </form>
-    <div id="image_anchor" style="width: 600px; height: 200px;"></div>
+    <div id="image-anchor"></div>
     <div id="res-anchor"></div>
+    <hr />
     <div id="introduce">
-        <div id="introduce_theory">
-            <h2>零点计算方式说明: </h2>
-            <p>输入"计算式"与"x的取值区间"</p>
-            <p>
-                例如:
-                <code>f(x) = x - 2.5, x ∈ [1,10]</code>
-            </p>
-            <p>
-                端点判断:
-                <code>f(1) = -1.5</code>
-            </p>
-            <p>
-                <code>f(2) = -0.5; f(1) * f(2) = 0.75 > 0</code>
-                不存在零点
-            </p>
-            <p>
-                <code>f(3) = 0.5; f(2)*(3) = -0.25 ≤ 0</code>
-                区间[2,3]有零点，
-            </p>
-            <p>递推表达式：
-                <code>若 f(x)*f(x+1) ≤ 0,则说[x,x+1]区间存在零点;x ∈ Z+ ,x + 1 一定在区间内</code>
-            </p>
-        </div>
-        <div id="introduce_formula_format">
-            <h2>表达式的输入约定：</h2>
-            <p>四则运算：
-                <code>+、-、*、\</code>
-            </p>
-            <p>幂运算：
-                <code>^</code>
-            </p>
-            <p>自然对数运算：
-                <code>log()</code>
-            </p>
-            <p>例如：
-                <code>33040+23.22*x*log(x)-0.02122*x^2-492000/x</code>
-            </p>
-        </div>
+      <div id="introduce-theory">
+        <h2>零点计算方式说明:</h2>
+        <p>输入"计算式"与"x的取值区间"</p>
+        <p>
+          例如:
+          <code>f(x) = x - 2.5, x ∈ [1,10]</code>
+        </p>
+        <p>
+          端点判断:
+          <code>f(1) = -1.5</code>
+        </p>
+        <p>
+          <code>f(2) = -0.5; f(1) * f(2) = 0.75 > 0</code>
+          不存在零点
+        </p>
+        <p>
+          <code>f(3) = 0.5; f(2)*(3) = -0.25 ≤ 0</code>
+          区间[2,3]有零点，
+        </p>
+        <p>
+          递推表达式：
+          <code
+            >若 f(x)*f(x+1) ≤ 0,则说[x,x+1]区间存在零点;x ∈ Z+ ,x + 1
+            一定在区间内</code
+          >
+        </p>
+      </div>
+      <div id="introduce-formula-format">
+        <h2>表达式的输入约定：</h2>
+        <p>
+          四则运算：
+          <code>+、-、*、\</code>
+        </p>
+        <p>
+          幂运算：
+          <code>^</code>
+        </p>
+        <p>
+          自然对数运算：
+          <code>log()</code>
+        </p>
+        <p>
+          例如：
+          <code>33040+23.22*x*log(x)-0.02122*x^2-492000/x</code>
+        </p>
+      </div>
     </div>
-</body>
-<script src="https://unpkg.com/function-plot@1/dist/function-plot.js"></script>
-<script src="./public/jquery-3.6.0.min.js"></script>
-<script src="./js/index.js"></script>
-
+  </body>
+  <script src="https://unpkg.com/function-plot@1/dist/function-plot.js"></script>
+  <script src="./public/jquery-3.6.0.min.js"></script>
+  <script src="./js/index.js"></script>
 </html>
